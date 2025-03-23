@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="text-center">Questionnaire DISC</h1>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Pour chaque question, choisissez la réponse qui vous correspond le mieux. Il n'y a pas de bonnes ou mauvaises réponses, 
+                    soyez simplement honnête dans vos choix pour obtenir un résultat précis.
+                </p>
+                
+                <div class="alert alert-info">
+                    <p><strong>Questionnaire amélioré :</strong> Cette version contient 20 questions pour une évaluation plus précise de votre profil DISC.</p>
+                    <p>Prenez votre temps pour répondre à chaque question. Vos réponses permettront d'identifier vos deux profils dominants parmi les quatre couleurs :</p>
+                    <ul>
+                        <li><span class="badge bg-danger">Rouge (D)</span> - Dominant</li>
+                        <li><span class="badge bg-warning text-dark">Jaune (I)</span> - Influent</li>
+                        <li><span class="badge bg-success">Vert (S)</span> - Stable</li>
+                        <li><span class="badge bg-primary">Bleu (C)</span> - Consciencieux</li>
+                    </ul>
+                </div>
+                
+                <form method="POST" action="" class="mt-4">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="progress mb-4">
+                        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
+                    
+                    {% for field in form if field.name != 'csrf_token' and field.name != 'submit' %}
+                        <div class="question-card mb-4" data-question="{{ loop.index }}">
+                            <h5>{{ loop.index }}. {{ field.label }}</h5>
+                            <div class="list-group">
+                                {% for subfield in field %}
+                                    <label class="list-group-item">
+                                        {{ subfield }}
+                                        {{ subfield.label.text }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            {% if field.errors %}
+                                <div class="text-danger">
+                                    {% for error in field.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    
+                    <div class="text-center mt-4">
+                        <button type="button" id="prev-btn" class="btn btn-secondary btn-lg me-2" disabled>Précédent</button>
+                        <button type="button" id="next-btn" class="btn btn-primary btn-lg">Suivant</button>
+                        {{ form.submit(class="btn btn-success btn-lg", style="display: none;") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const questionCards = document.querySelectorAll('.question-card');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.querySelector('input[type="submit"]');
+        const progressBar = document.querySelector('.progress-bar');
+        
+        let currentQuestion = 0;
+        const totalQuestions = questionCards.length;
+        
+        // Fonction pour mettre à jour la barre de progression
+        function updateProgressBar() {
+            const progress = Math.round((currentQuestion / totalQuestions) * 100);
+            progressBar.style.width = progress + '%';
+            progressBar.setAttribute('aria-valuenow', progress);
+            progressBar.textContent = progress + '%';
+        }
+        
+        // Fonction pour afficher la question courante
+        function showQuestion(index) {
+            questionCards.forEach((card, i) => {
+                if (i === index) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Mettre à jour les boutons
+            prevBtn.disabled = index === 0;
+            
+            if (index === totalQuestions - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+            
+            updateProgressBar();
+        }
+        
+        // Initialiser l'affichage
+        showQuestion(currentQuestion);
+        
+        // Gestionnaires d'événements pour les boutons
+        prevBtn.addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        });
+        
+        nextBtn.addEventListener('click', function() {
+            const currentCard = questionCards[currentQuestion];
+            const radioButtons = currentCard.querySelectorAll('input[type="radio"]');
+            let isAnswered = false;
+            
+            radioButtons.forEach(radio => {
+                if (radio.checked) {
+                    isAnswered = true;
+                }
+            });
+            
+            if (isAnswered) {
+                if (currentQuestion < totalQuestions - 1) {
+                    currentQuestion++;
+                    showQuestion(currentQuestion);
+                }
+            } else {
+                alert('Veuillez sélectionner une réponse avant de continuer.');
+            }
+        });
+    });
+</script>
+{% endblock %}

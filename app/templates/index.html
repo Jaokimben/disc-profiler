@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="text-center">Découvrez votre profil DISC</h1>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <div class="row">
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="p-3 bg-danger text-white rounded">
+                                <h3>D</h3>
+                                <p>Dominant</p>
+                                <p class="small">Rouge</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="p-3 bg-warning text-dark rounded">
+                                <h3>I</h3>
+                                <p>Influent</p>
+                                <p class="small">Jaune</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="p-3 bg-success text-white rounded">
+                                <h3>S</h3>
+                                <p>Stable</p>
+                                <p class="small">Vert</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="p-3 bg-info text-white rounded">
+                                <h3>C</h3>
+                                <p>Consciencieux</p>
+                                <p class="small">Bleu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="card-title">Qu'est-ce que le profil DISC ?</h2>
+                <p class="card-text">
+                    Le modèle DISC est un outil d'évaluation de la personnalité qui permet d'identifier vos préférences comportementales. 
+                    Il repose sur quatre profils principaux, chacun représenté par une couleur :
+                </p>
+                
+                <ul>
+                    <li><strong>Rouge (D - Dominant)</strong> : Déterminé, direct, orienté résultats</li>
+                    <li><strong>Jaune (I - Influent)</strong> : Sociable, enthousiaste, expressif</li>
+                    <li><strong>Vert (S - Stable)</strong> : Fiable, empathique, patient</li>
+                    <li><strong>Bleu (C - Consciencieux)</strong> : Précis, analytique, méticuleux</li>
+                </ul>
+                
+                <p class="card-text">
+                    Chaque personne possède une combinaison unique de ces quatre profils, avec généralement une ou deux dominantes.
+                    Découvrir votre profil DISC vous permettra de mieux comprendre vos forces, vos défis et votre façon d'interagir avec les autres.
+                </p>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('main.questionnaire') }}" class="btn btn-primary btn-lg">Commencer le test</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

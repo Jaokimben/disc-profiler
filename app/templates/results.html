@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="text-center">Résultats de votre profil DISC</h1>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success mb-4">
+                    <h4 class="alert-heading">Analyse complète !</h4>
+                    <p>Grâce au questionnaire amélioré de 20 questions, nous avons pu réaliser une évaluation plus précise de votre profil DISC.</p>
+                </div>
+                
+                <h2 class="text-center mb-4">Vos deux profils dominants</h2>
+                
+                <div class="row mb-5">
+                    {% for dominant in profile.dominant_profiles %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            {% if dominant.letter == 'D' %}
+                                <div class="card-header bg-danger text-white">
+                            {% elif dominant.letter == 'I' %}
+                                <div class="card-header bg-warning text-dark">
+                            {% elif dominant.letter == 'S' %}
+                                <div class="card-header bg-success text-white">
+                            {% elif dominant.letter == 'C' %}
+                                <div class="card-header bg-info text-white">
+                            {% endif %}
+                                <h3 class="text-center">{{ dominant.description.title }}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center mb-3">
+                                    <div class="display-4">{{ dominant.score }}/20</div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar 
+                                            {% if dominant.letter == 'D' %}bg-danger
+                                            {% elif dominant.letter == 'I' %}bg-warning
+                                            {% elif dominant.letter == 'S' %}bg-success
+                                            {% elif dominant.letter == 'C' %}bg-info
+                                            {% endif %}" 
+                                            role="progressbar" 
+                                            style="width: {{ dominant.percentage }}%" 
+                                            aria-valuenow="{{ dominant.percentage }}" 
+                                            aria-valuemin="0" 
+                                            aria-valuemax="100">{{ dominant.percentage|round|int }}%</div>
+                                    </div>
+                                </div>
+                                <p>{{ dominant.description.description }}</p>
+                                <h5>Forces :</h5>
+                                <p>{{ dominant.description.strengths }}</p>
+                                <h5>Défis :</h5>
+                                <p>{{ dominant.description.challenges }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <h3 class="text-center mb-4">Répartition complète de votre profil</h3>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Profil</th>
+                                        <th>Score</th>
+                                        <th>Pourcentage</th>
+                                        <th>Graphique</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-danger">
+                                        <td>Dominant (Rouge)</td>
+                                        <td>{{ profile.scores.D }}/20</td>
+                                        <td>{{ profile.percentages.D|round|int }}%</td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ profile.percentages.D }}%" aria-valuenow="{{ profile.percentages.D }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-warning">
+                                        <td>Influent (Jaune)</td>
+                                        <td>{{ profile.scores.I }}/20</td>
+                                        <td>{{ profile.percentages.I|round|int }}%</td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ profile.percentages.I }}%" aria-valuenow="{{ profile.percentages.I }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-success">
+                                        <td>Stable (Vert)</td>
+                                        <td>{{ profile.scores.S }}/20</td>
+                                        <td>{{ profile.percentages.S|round|int }}%</td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ profile.percentages.S }}%" aria-valuenow="{{ profile.percentages.S }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-info">
+                                        <td>Consciencieux (Bleu)</td>
+                                        <td>{{ profile.scores.C }}/20</td>
+                                        <td>{{ profile.percentages.C|round|int }}%</td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ profile.percentages.C }}%" aria-valuenow="{{ profile.percentages.C }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-4 mb-4">
+                    <div class="card-header bg-light">
+                        <h4 class="text-center">Précision des résultats</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Cette évaluation est basée sur un questionnaire amélioré de 20 questions, ce qui offre une précision accrue par rapport à la version standard de 10 questions.</p>
+                        <p>Les résultats reflètent vos tendances comportementales naturelles dans différentes situations. Gardez à l'esprit que :</p>
+                        <ul>
+                            <li>Chaque personne possède un mélange unique des quatre styles DISC</li>
+                            <li>Il n'y a pas de "bon" ou "mauvais" profil - chacun a ses forces et ses défis</li>
+                            <li>Votre profil peut varier légèrement selon le contexte (personnel vs professionnel)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('main.questionnaire') }}" class="btn btn-primary">Refaire le test</a>
+                    <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Retour à l'accueil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

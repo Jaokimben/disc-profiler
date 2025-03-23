@@ -1,0 +1,169 @@
+/* style.css */
+
+/* Variables de couleurs pour les profils DISC */
+:root {
+  --disc-red: #dc3545;    /* Rouge - Dominant */
+  --disc-yellow: #ffc107; /* Jaune - Influent */
+  --disc-green: #28a745;  /* Vert - Stable */
+  --disc-blue: #17a2b8;   /* Bleu - Consciencieux */
+}
+
+/* Styles généraux */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+/* En-tête et navigation */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+/* Cartes */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.card-header {
+  font-weight: 600;
+}
+
+/* Profils DISC sur la page d'accueil */
+.disc-profile-card {
+  transition: transform 0.3s ease;
+  height: 100%;
+}
+
+.disc-profile-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Formulaire du questionnaire */
+.list-group-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.list-group-item input[type="radio"] {
+  margin-right: 10px;
+}
+
+/* Style pour les questions du questionnaire */
+.question-card {
+  padding: 15px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.question-card h5 {
+  color: #495057;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Barre de progression */
+.progress {
+  height: 25px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.progress-bar {
+  font-weight: 600;
+  transition: width 0.5s ease;
+}
+
+/* Badges pour les profils DISC */
+.badge {
+  font-size: 90%;
+  padding: 0.4em 0.6em;
+  margin-right: 5px;
+}
+
+/* Couleurs spécifiques pour les profils */
+.profile-d {
+  border-left: 5px solid var(--disc-red);
+}
+
+.profile-i {
+  border-left: 5px solid var(--disc-yellow);
+}
+
+.profile-s {
+  border-left: 5px solid var(--disc-green);
+}
+
+.profile-c {
+  border-left: 5px solid var(--disc-blue);
+}
+
+/* Animation pour les transitions entre questions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question-card {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Pied de page */
+.footer {
+  margin-top: 50px;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .question-card h5 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 10px;
+  }
+  
+  .btn-lg {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .list-group-item {
+    padding: 0.75rem 0.5rem;
+  }
+}
